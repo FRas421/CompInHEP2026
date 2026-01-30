@@ -1,0 +1,215 @@
+%Includes all of my personal "belongings" in Latex, original and from other authors
+    \NeedsTeXFormat{LaTeX2e}
+    \ProvidesPackage{FRPack2718281b}
+%External Packadges Used
+    \usepackage{tikz, pgfplots, tcolorbox, ragged2e, graphicx, amsmath, mathtools, amssymb, hyperref, gensymb, bigints, titlesec, setspace, bm, physics, xcolor, emf, circuitikz, soul, IEEEtrantools, xcolor, scalerel, stackengine,braket,mathrsfs}
+    \usepackage[justification=centering]{subfig}
+    \usepackage[shortlabels]{enumitem}
+    
+%Global Settings
+    \justifying
+    \onehalfspacing
+    \setlength{\parindent}{0pt}
+    
+%Defining circuit elements
+    \ctikzset{bipoles/length=.6cm}
+        \newcommand\esymbol[1]{\begin{circuitikz}
+                \draw (0,0) to [#1] (1,0); \end{circuitikz}}
+    
+
+%RodPotential
+    % Author: Izaak Neutelings (July 2018)
+    % page 8 https://archive.org/details/StaticAndDynamicElectricity
+    % https://tex.stackexchange.com/questions/56353/extract-x-y-coordinate-of-an-arbitrary-point-on-curve-in-tikz
+    % https://tex.stackexchange.com/questions/412899/tikz-calculate-and-store-the-euclidian-distance-between-two-coordinates
+%\begin{rodPotentialCommands}
+    %Libraries Izaak Neutelings Rod Potential
+            \usetikzlibrary{angles,quotes, calc, decorations.markings, 3d} % for pic (angle labels)
+            \tikzset{>=latex} % for LaTeX arrow head
+        %Colors Izaak Neutelings Rod Potential
+            \colorlet{Ecol}{orange!90!black}
+            \colorlet{EcolFL}{orange!80!black}
+            \colorlet{veccol}{green!45!black}
+            \colorlet{EFcol}{red!60!black}
+        %Styles Izaak Neutelings Rod Potential
+            \tikzstyle{charged}=[top color=blue!20,bottom color=blue!40,shading angle=10]
+            \tikzstyle{darkcharged}=[very thin,top color=blue!60,bottom color=blue!80,shading angle=10]
+            \tikzstyle{charge+}=[very thin,top color=red!80,bottom color=red!80!black,shading angle=-5]
+            \tikzstyle{charge-}=[very thin,top color=blue!50,bottom color=blue!70!white!90!black,shading angle=10]
+            \tikzstyle{gauss surf}=[green!40!black,top color=green!2,bottom color=green!80!black!70,shading angle=5,fill opacity=0.5]
+            \tikzstyle{gauss lid}=[gauss surf,middle color=green!80!black!20,shading angle=40,fill opacity=0.6]
+            \tikzstyle{gauss dark}=[green!50!black,fill=green!60!black!70,fill opacity=0.8]
+            \tikzstyle{gauss line}=[green!40!black]
+            \tikzstyle{gauss dashed line}=[green!60!black!80,dashed,line width=0.2]
+            \tikzstyle{EField}=[->,thick,Ecol]
+            \tikzstyle{vector}=[->,thick,veccol]
+            \tikzstyle{normalvec}=[->,thick,blue!80!black!80]
+            \tikzstyle{EFieldLine}=[thick,EcolFL,decoration={markings,
+                      mark=at position 0.5 with {\arrow{latex}}},
+                      postaction={decorate}]
+            \tikzstyle{measure}=[fill=white,midway,outer sep=2]
+        %Constants Izaak Neutelings Rod Potential
+            \def\L{8}
+            \def\W{0.25}
+            \def\N{14}
+%\end{rodPotentialCommands}
+
+%\begin{dielecticParallelPlateCommands}
+    %Colors Izaak Neutelings dielectricParallelPlate
+        \colorlet{Ecol}{orange!90!black}
+        \colorlet{EcolFL}{orange!90!black}
+        \colorlet{veccol}{green!45!black}
+        \colorlet{EFcol}{red!60!black}
+        \colorlet{pluscol}{red!60!black}
+        \colorlet{minuscol}{blue!60!black}
+    %Styles Izaak Neutelings dielectricParallelPlate
+        \tikzstyle{anode}=[top color=red!20,bottom color=red!50,shading angle=20]
+        \tikzstyle{cathode}=[top color=blue!20,bottom color=blue!40,shading angle=20]
+        \tikzstyle{charge+}=[very thin,top color=red!80,bottom color=red!80!black,shading angle=-5]
+        \tikzstyle{charge-}=[very thin,top color=blue!50,bottom color=blue!70!white!90!black,shading angle=10]
+        \tikzstyle{vector}=[->,thick,veccol]
+        \tikzstyle{normalvec}=[->,thick,blue!80!black!80]
+        \tikzstyle{Cstyle}=[very thick,orange!90!black]
+        \tikzstyle{EField}=[->,thick,Ecol]
+        \tikzstyle{EField dashed}=[dashed,Ecol,line width=0.6]
+        \tikzset{
+          EFieldLine/.style={thick,EcolFL,decoration={markings,
+                             mark=at position #1 with {\arrow{latex}}},
+                             postaction={decorate}},
+          EFieldLine/.default=0.5}
+        \tikzstyle{measure}=[fill=white,midway,outer sep=2]
+    %Constants Izaak Neutelings dielectricParallelPlate
+        \def\dpa{0.28}
+        \def\dba{0.14}
+        \def\dipole#1#2{
+          \begin{scope}[shift={(#1)},rotate=#2]
+            \draw[charge-] (-\dpa,0) to[out=90,in=180] (0,\dba) -- (0,-\dba) to[out=180,in=-90] cycle;
+            \draw[charge+] ( \dpa,0) to[out=90,in=  0] (0,\dba) -- (0,-\dba) to[out=  0,in=-90] cycle;
+            \node[scale=0.7] at (-\dpa/2,0) {$-$};
+            \node[scale=0.7] at ( \dpa/2,0) {$+$};
+          \end{scope}
+        }
+    %Capacitor 2D constants Izaak Neutelings dielectricParallelPlate
+        \def\H{4.5}
+        \def\W{3.0}
+        \def\w{0.4}
+        \def\a{0.15*\W}
+        \def\NE{6}
+        \def\NQ{7}
+%\end{dielecticParallelPlateCommands}
+
+%\begin{ConductorToConductorExample}
+    %+Colors ConductorToConductorExample
+        \colorlet{Bcol}{violet!90}
+        \colorlet{Icol}{blue!70!black}
+        \colorlet{gausscol}{green!40!black}
+        \colorlet{gausscol2}{green!45!blue}
+        \colorlet{gausscol3}{orange!45!blue}
+        
+    %+Styles ConductorToConductorExample
+        \tikzstyle{current}=[->,Icol,thick]
+        \colorlet{pluscol}{red!60!black}
+        \colorlet{minuscol}{blue!60!black}
+        \tikzstyle{anode}=[top color=red!20,bottom color=red!50,shading angle=20]
+        \tikzstyle{cathode}=[top color=blue!20,bottom color=blue!40,shading angle=20]
+        \tikzstyle{metal}=[top color=black!15,bottom color=black!25,middle color=black!20,shading angle=10]
+        \tikzstyle{mydashes}=[dash pattern=on 1 off 1]
+        \tikzset{
+          BFieldLine/.style={thick,Bcol,postaction={decorate},decoration={markings,
+                             mark=at position #1 with {\arrow{latex}},
+                             mark=at position #1+0.5 with {\arrow{latex}}}},
+          EFieldLine/.default=0.5,
+          BFieldLine/.default=0.4}
+%\end{ConductorToConductorExample}
+
+%PGFPlot resizing
+    \pgfplotsset{compat=1.18, width=10cm}
+
+%Filip Raso Commands
+    %\begin{Filip Raso Section}
+        %Change base names of objects Filip Raso Commands
+            \renewcommand{\figurename}{Figure}
+            \renewcommand{\tablename}{Table}
+            
+        %New notation Filip Raso Commands
+            \newcommand{\indep}{\perp \!\!\! \perp}
+        %Existing command shortening Filip Raso Commands
+            %Greek Letter Shortening Filip Raso Commands
+                \newcommand{\vep}{\varepsilon}
+                \newcommand{\vhi}{\varphi}                
+            %Notation Shortening Filip Raso Commands
+                \newcommand{\fptd}[2]{\frac{\partial #1}{\partial #2}}
+                \newcommand{\fstd}[2]{\frac{\dd #1}{\dd #2}}
+                \newcommand{\ing}[4]{\int_{#1}^{#2}{#3}\hspace{1mm}\dd{#4}}
+                \newcommand{\floor}[1]{\lfloor{#1}\rfloor}
+                \newcommand{\limit}[2]{\lim_{{#1}\to{#2}}}
+                \newcommand{\abso}[1]{\left|{#1}\right|}
+                \newcommand{\lr}[1]{\left({#1}\right)}
+                \newcommand{\lrb}[1]{\left[{#1}\right]}
+                \newcommand{\lrcb}[1]{\left\{{#1}\right\}}
+                \newcommand{\Sum}[2]{\sum_{#1}^{#2}}
+
+        %Common constant/ expressions used Filip Raso Commands
+            \newcommand{\mun}[2]{\frac{\mu_0 #1}{4\pi #2}} %Mu/4PI from elmag
+
+        %Visual commands Filip Raso Commands
+            \newcommand{\lne}{\rule{\textwidth}{0.4pt}}
+            \newcommand{\tcbex}[2]{\begin{tcolorbox}[colback=black!5!white,colframe=blue!50!white!49!red,title=\textbf{Example #1}]
+            #2\end{tcolorbox}}
+            
+        %Vector notation shortening Filip Raso Commands
+            %Linear Algebra operations Filip Raso Commands
+                \newcommand{\Span}[1]{\text{span}\left\{{#1}\right\}}
+                \newcommand{\Dim}[1]{\text{dim}\lr{{#1}}}
+                \newcommand{\Ker}[1]{\text{ker}\lr{{#1}}}
+                \newcommand{\Img}[1]{\text{im}\lr{{#1}}}
+                \newcommand{\Col}[1]{\text{col}\lr{{#1}}}
+                \newcommand{\Rk}[1]{\text{rk}\lr{{#1}}}
+                \newcommand{\Row}[1]{\text{row}\lr{{#1}}}
+                \newcommand{\Exp}[1]{\text{exp}\lr{#1}}
+                \newcommand{\Det}[1]{\text{det}\lr{#1}}
+                \newcommand{\Arg}[1]{\text{arg}\lr{#1}}
+                \newcommand{\Comp}[2]{\text{Comp}_{#1}\lr{#2}}
+            %Vectors Filip Raso Commands
+                \newcommand{\vv}[0]{\vec{v}}
+                \newcommand{\vw}[0]{\vec{w}}
+                \newcommand{\vus}[0]{\vec{u}}
+                \newcommand{\vr}[0]{\vec{r}}
+                \newcommand{\vx}[0]{\vec{x}}
+                \newcommand{\vas}[0]{\vec{a}}
+                \newcommand{\vbs}[0]{\vec{b}}
+                \newcommand{\vd}[0]{\vec{d}}
+                \newcommand{\vQ}[0]{\vec{Q}}
+                \newcommand{\vL}[0]{\vec{L}}
+                \newcommand{\vP}[0]{\vec{P}}
+                \newcommand{\vz}[0]{\vec{z}}
+
+                \newcommand{\ntvc}[3]{#1\hat{i}+#2\hat{j}+#3\hat{k}}
+        %Citing commands Filip Raso Commands
+            \newcommand{\cte}[1]{($^{#1}$)}
+        %For writing Units Filip Raso Commands
+            \newcommand{\unts}[1]{\hspace{1mm}\text{#1}}
+        %Long Division Filip Raso Commands
+            \newcommand\showdiv[1]{\overline{\smash{\hstretch{.5}{)}\mkern-3.2mu\hstretch{.5}{)}}#1}}
+            \let\ph\phantom           
+        %Augmented Matrix Filip Raso Commands
+            \newenvironment{amatrix}[2]{%
+              \left(\begin{array}{@{}*{#1}{c}|@{\hspace{1mm}}*{#2}{c}}
+            }{%
+              \end{array}\right)
+            }            
+        %Projection Filip Raso Commands
+            \DeclareMathOperator{\proj}{\textit{proj}}
+        %Orthogonal projection Filip Raso Commands
+            \DeclareMathOperator{\oproj}{\textit{oproj}}
+        %Color coded derivative Filip Raso Commands
+            \newcommand{\fstdc}[4]{
+            \ifx#1t
+                \frac{\textcolor{#2}{\dd {#3}}}{\dd {#4}}
+            \else\ifx#1b
+                \frac{\dd {#3}}{\textcolor{#2}{\dd {#4}}}
+            \else\ifx#1a
+                \frac{\textcolor{#2}{\dd {#3}}}{\textcolor{#2}{\dd {#4}}}
+            \fi\fi\fi
+            }
+    %end{Filip Raso Commands}
